@@ -1,6 +1,6 @@
 import networkx
+import math
 
-from docutils.parsers.rst.directives.html import meta
 
 
 class Coordinate:
@@ -13,8 +13,18 @@ class Shape:
         self.longeur = longeur
         self.largeur = largeur
 
+    def isValidShape(self, min, max):
+        if self.size() < min:
+            return False
+        if self.size() > max:
+            return False
+        return True
+
     def size(self):
         return self.longeur*self.largeur
+
+    def __str__(self):
+        return "{ longeur:" + str(self.longeur) + "," + " largeur: " + str(self.largeur) + "}"
 
 
 class Pizza:
@@ -23,7 +33,7 @@ class Pizza:
         self.min_ingredient = min
         self.max_shape_size = max
 
-    def isValidShape(self, shape, coordinate):
+    def isValidSlice(self, shape, coordinate):
         nb_tomato = 0
         for i in range(coordinate.x, coordinate.x + shape.longeur):
             if matrix[i][coordinate.y] == 'T':
@@ -60,9 +70,21 @@ matrix_zero = [L * [_] for _ in range(l)]
 
 print(matrix_zero)
 
-pizza = Pizza(matrix, meta_list[2], meta[3])
+pizza = Pizza(matrix, meta_list[2], meta_list[3])
+
+min_long = math.floor(math.sqrt(float(meta_list[3])))
+
+all_shape = []
+
+min_size = int(meta_list[2])*2
+max_size = int(meta_list[3])
+
+for i in range(1, max_size+1):
+    for j in range(1, max_size+1):
+        current_shape = Shape(i, j)
+        if current_shape.isValidShape(min_size, max_size):
+            all_shape.append(current_shape)
 
 
-#min_long = meta_list[2]
-#max_long =
-
+for shape in all_shape:
+    print(shape)
