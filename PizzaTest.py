@@ -1,5 +1,6 @@
 import networkx
 import math
+import numpy
 
 
 
@@ -28,10 +29,33 @@ class Shape:
 
 
 class Pizza:
-    def __init__(self, matrix, min, max):
+    def __init__(self, matrix, list):
         self.matrix = matrix
-        self.min_ingredient = min
-        self.max_shape_size = max
+        self.min_ingredient = int(list[2])
+        self.max_shape_size = int(list[3])
+        self.long = int(list[1])
+        self.width = int(list[0])
+        L = len(matrix)
+        l = len(matrix[0])
+        self.matrix_tomato = [L * [0] for _ in range(l)] # numpy.zeros((L, l))
+        self.generate_array_tomato()
+
+    def generate_array_tomato(self):
+        #L = len(matrix)
+       # l = len(matrix[0])
+       # self.matrix_tomato = numpy.zeros((L, l)) #  [L * [_] for _ in range(l)]
+
+        nb_tomato = 0
+        for i in range(0, self.long):
+            for j in range(0, self.width):
+                if matrix[j][i] == 'T':
+                    nb_tomato += 1
+                    self.matrix_tomato[i][j] = nb_tomato
+
+        print("\nNb tomato :")
+        print(self.matrix_tomato)
+
+
 
     def isValidSlice(self, shape, coordinate):
         nb_tomato = 0
@@ -49,28 +73,20 @@ class Pizza:
 
 f = open("input_files/small.in", "r")
 
-#str = f.read()
 matrix = []
 for line in f.readlines():
-    #print(line)
     matrix.append(line[:-1])
-    #for char in line:
-        #print(char)
-        #matrix.append()
 
 
 meta_list = matrix[0].split(' ')
 del matrix[0]
+print("\nPizzaaa :")
 print(matrix)
+
+print("\nMeta data :")
 print(meta_list)
 
-L = len(matrix)
-l = len(matrix[0])
-matrix_zero = [L * [_] for _ in range(l)]
-
-print(matrix_zero)
-
-pizza = Pizza(matrix, meta_list[2], meta_list[3])
+pizza = Pizza(matrix, meta_list)
 
 min_long = math.floor(math.sqrt(float(meta_list[3])))
 
@@ -85,6 +101,8 @@ for i in range(1, max_size+1):
         if current_shape.isValidShape(min_size, max_size):
             all_shape.append(current_shape)
 
-
+print("\nShapes acceptables :")
 for shape in all_shape:
     print(shape)
+
+
