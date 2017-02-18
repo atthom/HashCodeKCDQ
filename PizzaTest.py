@@ -39,7 +39,7 @@ class Pizza:
         self.width = int(list[0])
         L = len(matrix)
         l = len(matrix[0])
-        self.matrix_tomato = [L * [0] for _ in range(l)]  # numpy.zeros((L, l))
+        self.matrix_tomato = [l * [0] for _ in range(L)]  # numpy.zeros((L, l))
         self.generate_array_tomato()
 
     def generate_array_tomato(self):
@@ -48,11 +48,11 @@ class Pizza:
         # self.matrix_tomato = numpy.zeros((L, l)) #  [L * [_] for _ in range(l)]
 
         nb_tomato = 0
-        for i in range(0, self.long):
-            for j in range(0, self.width):
+        for j in range(0, self.width):
+            for i in range(0, self.long):
                 if matrix[j][i] == 'T':
                     nb_tomato += 1
-                self.matrix_tomato[i][j] = nb_tomato
+                self.matrix_tomato[j][i] = nb_tomato
 
         print("\nNb tomato :")
         print(self.matrix_tomato)
@@ -164,4 +164,7 @@ nx.draw_networkx_labels(G, pos, font_size=20, font_family='sans-serif')
 
 plt.axis('off')
 plt.savefig("weighted_graph.png")  # save as png
-plt.show()
+#plt.show()
+
+
+#clique = nx.find_cliques(G)
