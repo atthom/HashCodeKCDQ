@@ -43,19 +43,19 @@ class Pizza:
         self.generate_array_tomato()
 
     def generate_array_tomato(self):
-        # L = len(matrix)
-        # l = len(matrix[0])
-        # self.matrix_tomato = numpy.zeros((L, l)) #  [L * [_] for _ in range(l)]
-
-        nb_tomato = 0
-        for j in range(0, self.width):
-            for i in range(0, self.long):
-                if matrix[j][i] == 'T':
+        for k in range(0, self.width):
+            nb_tomato = 0
+            for l in range(0, self.long):
+                if matrix[k][l] == 'T':
                     nb_tomato += 1
-                self.matrix_tomato[j][i] = nb_tomato
+
+                self.matrix_tomato[k][l] = nb_tomato + self.matrix_tomato[k - 1][l]
 
         print("\nNb tomato :")
         print(self.matrix_tomato)
+
+    def getNbTomatoByCoordinate(self, coord):
+        return self.matrix_tomato[coord.x][coord.y]
 
     def isValidSlice(self, shape, coordinate):
         nb_tomato = 0
