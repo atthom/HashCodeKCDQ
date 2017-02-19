@@ -10,8 +10,8 @@ class Coordinate:
         self.x = x
         self.y = y
 
-
 class Shape:
+    ### classe qui encapsule les fonctions utiles pour les shapes
     def __init__(self, longeur, largeur):
         self.longeur = longeur
         self.largeur = largeur
@@ -31,6 +31,7 @@ class Shape:
 
 
 class Pizza:
+    ### initialise la pizza
     def __init__(self, matrix, list):
         self.matrix = matrix
         self.min_ingredient = int(list[2])
@@ -42,6 +43,8 @@ class Pizza:
         self.matrix_tomato = [l * [0] for _ in range(L)]  # numpy.zeros((L, l))
         self.generate_array_tomato()
 
+    ### genere un tableau pour connaitre le nombre de tomate à une position,
+    ### sans avoir besoin de tout recalculer à chaque fois
     def generate_array_tomato(self):
         for k in range(0, self.width):
             nb_tomato = 0
@@ -57,18 +60,8 @@ class Pizza:
     def getNbTomatoByCoordinate(self, coord):
         return self.matrix_tomato[coord.x][coord.y]
 
+    ### A refactor : permet de vérifier si la slice est valide en connaissant la shape et la position de départ
     def isValidSlice(self, shape, coordinate):
-        nb_tomato = 0
-        for i in range(coordinate.x, coordinate.x + shape.longeur):
-            if matrix[i][coordinate.y] == 'T':
-                nb_tomato += 1
-
-        nb_mush = shape.size() - nb_tomato
-
-        if nb_mush > self.min_ingredient and nb_tomato > self.min_ingredient:
-            return True
-        else:
-            return False
 
 
 f = open("input_files/small.in", "r")
@@ -94,6 +87,8 @@ all_shape = []
 min_size = int(meta_list[2]) * 2
 max_size = int(meta_list[3])
 
+### Générations des différentes shapes utilisés
+
 for i in range(1, max_size + 1):
     for j in range(1, max_size + 1):
         current_shape = Shape(i, j)
@@ -105,6 +100,10 @@ for shape in all_shape:
     print(shape)
 
 print("sandbox pour trouver un sous graph complet")
+
+### On ne peux pas utiliser un graph orienté si on veux utiliser la recherche de la library
+### Du coup j'ai laisser qu'un arc sur les deux et j'ai additionné le poids des deux slices
+
 G = nx.Graph()
 
 G.add_edge('1', '2', weight=4+7)
@@ -151,17 +150,16 @@ G.add_edge('8', '10', weight=2+2)
 #G.add_edge('10', '3', weight=2)
 #G.add_edge('10', '8', weight=2)
 
-pos = nx.spring_layout(G)  # positions for all nodes
 
+### Bricolage pour afficher le graph, #yolo #swag
+
+pos = nx.spring_layout(G)  # positions for all nodes
 # nodes
 nx.draw_networkx_nodes(G, pos, node_size=700)
-
 # edges
 nx.draw_networkx_edges(G, pos, edgelist=G.edges(data=True),  width=6)
-
 # labels
 nx.draw_networkx_labels(G, pos, font_size=20, font_family='sans-serif')
-
 plt.axis('off')
 plt.savefig("weighted_graph.png")  # save as png
 #plt.show()
@@ -180,8 +178,11 @@ plt.savefig("weighted_graph222.png")
 
 #clique = list(nx.enumerate_all_cliques(G))
 
+
 clique = list(nx.algorithms.find_cliques(G))
 for graph in clique:
+    ### affiche une liste de slice qui correspond a une configuration possible
+    ### il suffit de calculer l'air couvert par chaqu'une des liste, prendre le maximum et c'est bon :)
     print(graph)
 
     # pos = nx.spring_layout(graph)  # positions for all nodes
