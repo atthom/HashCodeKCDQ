@@ -105,51 +105,51 @@ for shape in all_shape:
     print(shape)
 
 print("sandbox pour trouver un sous graph complet")
-G = nx.DiGraph()
+G = nx.Graph()
 
-G.add_edge('1', '2', weight=4)
-G.add_edge('1', '4', weight=4)
-G.add_edge('1', '7', weight=4)
-G.add_edge('1', '9', weight=4)
+G.add_edge('1', '2', weight=4+7)
+G.add_edge('1', '4', weight=4+6)
+G.add_edge('1', '7', weight=4+4)
+G.add_edge('1', '9', weight=4+5)
 
-G.add_edge('2', '6', weight=7)
-G.add_edge('2', '3', weight=7)
-G.add_edge('2', '1', weight=7)
-G.add_edge('2', '10', weight=7)
+G.add_edge('2', '6', weight=7+2)
+G.add_edge('2', '3', weight=7+8)
+#G.add_edge('2', '1', weight=7)
+G.add_edge('2', '10', weight=7+2)
 
-G.add_edge('3', '5', weight=8)
-G.add_edge('3', '8', weight=8)
-G.add_edge('3', '6', weight=8)
-G.add_edge('3', '2', weight=8)
-G.add_edge('3', '10', weight=8)
+G.add_edge('3', '5', weight=8+30)
+G.add_edge('3', '8', weight=8+2)
+G.add_edge('3', '6', weight=8+2)
+#G.add_edge('3', '2', weight=8)
+G.add_edge('3', '10', weight=8+2)
 
-G.add_edge('4', '1', weight=6)
-G.add_edge('4', '7', weight=6)
-G.add_edge('4', '5', weight=6)
+#G.add_edge('4', '1', weight=6)
+G.add_edge('4', '7', weight=6+4)
+G.add_edge('4', '5', weight=6+30)
 
-G.add_edge('5', '8', weight=30)
-G.add_edge('5', '3', weight=30)
-G.add_edge('5', '4', weight=30)
+G.add_edge('5', '8', weight=30+2)
+#G.add_edge('5', '3', weight=30)
+#G.add_edge('5', '4', weight=30)
 
-G.add_edge('6', '8', weight=2)
-G.add_edge('6', '3', weight=2)
-G.add_edge('6', '2', weight=2)
-G.add_edge('6', '10', weight=2)
+G.add_edge('6', '8', weight=2+2)
+#G.add_edge('6', '3', weight=2)
+#G.add_edge('6', '2', weight=2)
+G.add_edge('6', '10', weight=2+2)
 
-G.add_edge('7', '4', weight=4)
-G.add_edge('7', '1', weight=4)
+#G.add_edge('7', '4', weight=4)
+#G.add_edge('7', '1', weight=4)
 
-G.add_edge('8', '6', weight=2)
-G.add_edge('8', '3', weight=2)
-G.add_edge('8', '5', weight=2)
-G.add_edge('8', '10', weight=2)
+#G.add_edge('8', '6', weight=2)
+#G.add_edge('8', '3', weight=2)
+#G.add_edge('8', '5', weight=2)
+G.add_edge('8', '10', weight=2+2)
 
-G.add_edge('9', '1', weight=5)
+#G.add_edge('9', '1', weight=5)
 
-G.add_edge('10', '2', weight=2)
-G.add_edge('10', '6', weight=2)
-G.add_edge('10', '3', weight=2)
-G.add_edge('10', '8', weight=2)
+#G.add_edge('10', '2', weight=2)
+#G.add_edge('10', '6', weight=2)
+#G.add_edge('10', '3', weight=2)
+#G.add_edge('10', '8', weight=2)
 
 pos = nx.spring_layout(G)  # positions for all nodes
 
@@ -166,5 +166,30 @@ plt.axis('off')
 plt.savefig("weighted_graph.png")  # save as png
 #plt.show()
 
+graph = nx.make_max_clique_graph(G)
+pos = nx.spring_layout(graph)  # positions for all nodes
+    # # nodes
+nx.draw_networkx_nodes(graph, pos, node_size=700)
+# edges
+nx.draw_networkx_edges(graph, pos, edgelist=graph.edges(data=True), width=6)
+    # # labels
+nx.draw_networkx_labels(graph, pos, font_size=20, font_family='sans-serif')
+plt.axis('off')
+plt.savefig("weighted_graph222.png")
 
-#clique = nx.find_cliques(G)
+
+#clique = list(nx.enumerate_all_cliques(G))
+
+clique = list(nx.algorithms.find_cliques(G))
+for graph in clique:
+    print(graph)
+
+    # pos = nx.spring_layout(graph)  # positions for all nodes
+    # # # nodes
+    # nx.draw_networkx_nodes(graph, pos, node_size=700)
+    # # # edges
+    # nx.draw_networkx_edges(graph, pos, edgelist=graph.edges(data=True), width=6)
+    # # # labels
+    # nx.draw_networkx_labels(graph, pos, font_size=20, font_family='sans-serif')
+    # plt.axis('off')
+    # plt.savefig("weighted_graph" + str(graph) + ".png")
