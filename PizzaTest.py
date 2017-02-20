@@ -30,6 +30,14 @@ class Shape:
         return "{ longeur:" + str(self.longeur) + "," + " largeur: " + str(self.largeur) + "}"
 
 
+
+class Slice:
+    ### classe qui encapsule les fonctions utiles pour les shapes
+    def __init__(self, coordinate, shape):
+        self.coordinate = coordinate
+        self.shape = shape
+
+
 class Pizza:
     ### initialise la pizza
     def __init__(self, matrix, list):
@@ -203,3 +211,9 @@ print("after pruning :")
 
 for graph in pruned_list:
     print(graph)
+
+
+### Methode Ismael : [[1, 0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 0, 0], [1, 1, 0, 1, 1, 0, 1], [1, 0, 0, 1, 0, 0, 0], [1, 1, 1, 1, 1, 1, 0], [1, 1, 1, 1, 1, 1, 0]]
+# [[1, 1, 1, 1, 2, 3, 4], [1, 1, 1, 1, 3, 4, 5], [2, 3, 3, 4, 7, 8, 10], [3, 4, 4, 6, 9, 10, 12], [4, 6, 7, 10, 14, 16, 18], [5, 8, 10, 14, 19, 22, 24]]
+# Methode Thomas :  [[1, 1, 1, 1, 2, 3, 4], [1, 1, 1, 1, 3, 4, 5], [2, 3, 3, 4, 7, 8, 10], [3, 4, 4, 6, 9, 10, 12], [4, 6, 7, 10, 14, 16, 18], [5, 8, 10, 14, 19, 22, 24]]
+
