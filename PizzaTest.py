@@ -1,6 +1,6 @@
 import math
 import numpy
-
+import operator
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -62,6 +62,8 @@ class Pizza:
 
     ### A refactor : permet de vérifier si la slice est valide en connaissant la shape et la position de départ
     def isValidSlice(self, shape, coordinate):
+        ###
+        shape.size()
 
 
 f = open("input_files/small.in", "r")
@@ -115,6 +117,7 @@ G.add_edge('2', '6', weight=7+2)
 G.add_edge('2', '3', weight=7+8)
 #G.add_edge('2', '1', weight=7)
 G.add_edge('2', '10', weight=7+2)
+G.add_edge('2', '8', weight=7+2)
 
 G.add_edge('3', '5', weight=8+30)
 G.add_edge('3', '8', weight=8+2)
@@ -175,22 +178,28 @@ nx.draw_networkx_labels(graph, pos, font_size=20, font_family='sans-serif')
 plt.axis('off')
 plt.savefig("weighted_graph222.png")
 
-
 #clique = list(nx.enumerate_all_cliques(G))
 
-
+print("calcul des cliques")
 clique = list(nx.algorithms.find_cliques(G))
+min_size = 0
+max_size = 0
+
+cc = nx.algorithms.node_clique_number(G, cliques=clique)
+print("tableau associatif (noeud => longeur de la plus grande clique qui contient le noeud)")
+print(cc)
+
+nodemax = max(cc, key=cc.get)
+size_max = cc[nodemax]
+
+pruned_list = []
 for graph in clique:
     ### affiche une liste de slice qui correspond a une configuration possible
     ### il suffit de calculer l'air couvert par chaqu'une des liste, prendre le maximum et c'est bon :)
-    print(graph)
+    if len(graph)*5 > size_max*2:
+        pruned_list.append(graph)
 
-    # pos = nx.spring_layout(graph)  # positions for all nodes
-    # # # nodes
-    # nx.draw_networkx_nodes(graph, pos, node_size=700)
-    # # # edges
-    # nx.draw_networkx_edges(graph, pos, edgelist=graph.edges(data=True), width=6)
-    # # # labels
-    # nx.draw_networkx_labels(graph, pos, font_size=20, font_family='sans-serif')
-    # plt.axis('off')
-    # plt.savefig("weighted_graph" + str(graph) + ".png")
+print("after pruning :")
+
+for graph in pruned_list:
+    print(graph)
