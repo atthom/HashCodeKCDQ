@@ -20,7 +20,7 @@ def algo(cache_size, nb_cache, endpoints, videos_sizes):
     used_endpoints = copy.deepcopy(endpoints)
 
 
-    while not is_full(compute_used_place_cache(caches, videos_sizes)):
+    while not is_full(cache_size, videos_sizes, compute_used_place_cache(caches, videos_sizes)):
         for index in range(nb_cache - 1):
             endpoint_id = used_endpoints[find_nearest_endpoint_not_empty(index, used_endpoints)]
             video_id = used_endpoints[endpoint_id][2].pop(0)[0]
