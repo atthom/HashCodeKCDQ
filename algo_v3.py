@@ -280,7 +280,7 @@ def submit(res, f):
     f.write(str(len(res)))
     for icaches in range(0, len(res)):
         videos = ' '.join(map(lambda x:str(x[0]), res[icaches]))
-        f.write(str(icaches) + videos)
+        f.write(str(icaches) + videos + "\n")
 
 f = open("zoo.check", "w")
 
@@ -288,4 +288,3 @@ stri = open("me_at_the_zoo.in", "r").read()
 f.write(stri)
 submit(res, f)
 f.close()
-
