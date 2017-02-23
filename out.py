@@ -19,4 +19,4 @@ def saveOutput(fileName, caches):
     file.close()
 
 if __name__ == "__main__":
-    saveOutput("test", [[1,2,3], [0], [], [2,3]])
+    saveOutput("test_output", [[1,2,3], [0], [], [2,3]])
