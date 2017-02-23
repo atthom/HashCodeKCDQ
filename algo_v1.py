@@ -6,8 +6,6 @@ def algo(cache_size, nb_cache, endpoints, video_sizes):
         endpoint[2] = sorted(endpoint[2], key=video_sorter, reverse=True)
 
     caches = []
-    for i in range(nb_cache):
-        caches[i] = []
 
     return []
 

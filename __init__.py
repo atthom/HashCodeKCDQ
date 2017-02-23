@@ -16,21 +16,34 @@ cache_size = int(first_line[4])
 # Parses the second one: size of videos
 video_sizes = [int(item) for item in data[1].split(' ')]
 
+
 # Parses each endpoint
 endpoints = []
 index = 2
-for i in range(nbr_endpoints - 1):
+for i in range(nbr_endpoints):
     endpoint = []
     datacenter_latency, nbr_connected_cache = [int(item) for item in data[index].split(' ')]
 
-    cache_latencies = []
+    cache_latencies = {}
     for j in range(nbr_connected_cache):
-        cache_latencies.append([int(item) for item in data[index].split(' ')])
+        cache_id, latency = [int(item) for item in data[index].split(' ')]
+        cache_latencies[cache_id] = latency
         index += 1
 
     endpoints.append([datacenter_latency, cache_latencies])
 
     index += 1
 
-caches = algo(cache_size, nbr_cache, endpoints)
+videos = []
+for i in range(len(video_sizes)):
+    line = data[index].split(' ')
+    videos.append((int(line[0]), int(line[1]), int(line[2])))
+    index += 1
+
+for video in videos:
+    if len(endpoints[video[1]]) == 2:
+        endpoints[video[1]].append([])
+    endpoints[video[1]][2].append((video[0], video[2]))
+
+caches = algo(cache_size, nbr_cache, endpoints, video_sizes)
 saveOutput("kitten.out", caches)

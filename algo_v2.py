@@ -1,13 +1,6 @@
+from knapsack import solve_it
 
-def algo(cache_size, nb_cache, endpoints):
-    # endpoint is : (latency, [(idCache, latencyCache)], [(idVideo, requests])
-    # for each enpoints, sort videos by requests
-    for endpoint in endpoints:
-        endpoint[2] = sorted(endpoint[2], key=video_sorter, reverse=True)
+def algo(cache_size, nb_cache, endpoints, video_sizes):
+    tab_of_tab_request_servers = []
+    return solve_it(tab_of_tab_request_servers, cache_size)
 
-
-    return []
-
-
-def video_sorter(video):
-    return video[1]
