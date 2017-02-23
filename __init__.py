@@ -1,4 +1,6 @@
 import sys
+from algo_v1 import algo
+from out import saveOutput
 
 data = [item[:-1] for item in sys.stdin.readlines()]
 
@@ -28,3 +30,6 @@ for i in range(nbr_endpoints - 1):
     endpoints.append([datacenter_latency, cache_latencies])
 
     index += 1
+
+caches = algo(cache_size, nb_cache, endpoints)
+saveOutput("kitten.out", caches)
