@@ -32,5 +32,5 @@ for i in range(nbr_endpoints - 1):
 
     index += 1
 
-caches = algo(cache_size, nb_cache, endpoints)
+caches = algo(cache_size, nbr_cache, endpoints)
 saveOutput("kitten.out", caches)
