@@ -18,6 +18,7 @@ video_sizes = [int(item) for item in data[1].split(' ')]
 
 
 # Parses each endpoint
+# [datacenter_latency, [ [cacheId, ms], ...] ]]
 endpoints = []
 index = 2
 for i in range(nbr_endpoints):
