@@ -8,7 +8,8 @@ first_line = data[0].split(' ')
 nbr_videos = int(first_line[0])
 nbr_endpoints = int(first_line[1])
 nbr_request_description = int(first_line[2])
-cache_size = int(first_line[3])
+nbr_cache = int(first_line[3])
+cache_size = int(first_line[4])
 
 # Parses the second one: size of videos
 video_sizes = [int(item) for item in data[1].split(' ')]
