@@ -17,6 +17,7 @@ cache_size = int(first_line[4])
 video_sizes = [int(item) for item in data[1].split(' ')]
 
 # Parses each endpoint
+# [datacenter_latency, [ [cacheId, ms], ...] ]]
 endpoints = []
 index = 2
 for i in range(nbr_endpoints - 1):
@@ -32,5 +33,5 @@ for i in range(nbr_endpoints - 1):
 
     index += 1
 
-caches = algo(cache_size, nbr_cache, endpoints)
+caches = algo(cache_size, nbr_cache, endpoints, video_sizes)
 saveOutput("kitten.out", caches)
